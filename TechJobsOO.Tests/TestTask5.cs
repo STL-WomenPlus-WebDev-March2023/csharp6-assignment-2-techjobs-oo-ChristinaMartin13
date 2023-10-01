@@ -3,14 +3,13 @@ using TechJobs.Tests;
 
 namespace TechJobsOO.Tests
 {
-	[TestClass]
+    [TestClass]
     public class TestTask5
     {
         //Task 5 Tests used to verify that students are testing their custom ToString method.
         //Uses jobs from the Job class.
         //Tests are numbered.
 
-    
 
         //Unit Test 1:  TestToStringStartsAndEndsWithNewLine  -----------------------
 
@@ -39,23 +38,26 @@ namespace TechJobsOO.Tests
             Assert.AreEqual("true", existsCheck, "'TestToStringStartsAndEndsWithNewLine' not created");
         }
 
-
         [TestMethod]  //2
         public void Test_TestToString_Starts_And_Ends_With_NewLine()
         {
             //comparing output to a text file.
-            //id numbers may get a little wonky
 
             //setup
-            string text = System.IO.File.ReadAllText("StartsAndEndsWithNewLine.txt").ToString();
+            string fromFile = File.ReadAllText("StartsAndEndsWithNewLine.txt").ToString();
+
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
             var job = new RunTechJobs();
             job.RunProgram();
-            var output = stringWriter.ToString();
+            string rawOutput = stringWriter.ToString();
+
+            string comparisonText = StandardizeLineBreaks(fromFile);
+            string correctedOutput = StandardizeLineBreaks(rawOutput);
+            string expected = SyncOutputTestIdNumbers(comparisonText, correctedOutput);
 
             //verify
-            Assert.AreEqual(text, output, "New Line issue");
+            Assert.AreEqual(expected, correctedOutput, "New Line issue");
         }
 
         //Unit Test 2: TestToStringContainsCorrectLabelsAndData -----------------------
@@ -101,6 +103,7 @@ namespace TechJobsOO.Tests
 
             //verify
             Assert.IsTrue(output.Contains($"Name: Product tester") && output.Contains("Employer: ACME") && output.Contains("Location: Desert") && output.Contains("Position Type: Quality control") && output.Contains("Core Competency: Persistence"));
+
         }
 
 
@@ -135,21 +138,49 @@ namespace TechJobsOO.Tests
         public void Test_TestToStringHandlesEmptyField()
         {
             //comparing output to a text file.
-            //id numbers may get a little wonky
 
-            string text = System.IO.File.ReadAllText("EmptyFieldTest.txt").ToString();
+            string fromFile = File.ReadAllText("EmptyFieldTest.txt").ToString();
+
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
             var job = new RunTechJobs();
             job.RunProgram();
-            var output = stringWriter.ToString();
+            var rawOutput = stringWriter.ToString();
+
+            string comparisonText = StandardizeLineBreaks(fromFile);
+            string correctedOutput = StandardizeLineBreaks(rawOutput);
+            string expected = SyncOutputTestIdNumbers(comparisonText, correctedOutput);
 
             //verify
-            Assert.AreEqual(text, output, "Empty string handling error");
+            Assert.AreEqual(expected, correctedOutput, "Empty string handling error");
+        }
+
+        private string SyncOutputTestIdNumbers(string target, string source)
+        {
+            int startId = GetConsoleOutputStartId(source) - 1;
+            const string pattern = @"ID: \d+";
+            return Regex.Replace(target, pattern, delegate (Match m)
+            {
+                startId++;
+                return $"ID: {startId}";
+            });
+        }
+
+        private int GetConsoleOutputStartId(string consoleOutput)
+        {
+            const string pattern = @"(?:ID: )(\d+)";
+            Match match = Regex.Match(consoleOutput, pattern);
+            return match.Success ? int.Parse(match.Groups[1].Value) : 1;
+        }
+
+        private string StandardizeLineBreaks(string text)
+        {
+            //Linux and modern Macs use \n, Windows uses \r\n, old Macs use \r
+            const string pattern = @"\r?\n|\r";
+            return Regex.Replace(text, pattern, Environment.NewLine);
         }
 
 
     }
 
 }
-
