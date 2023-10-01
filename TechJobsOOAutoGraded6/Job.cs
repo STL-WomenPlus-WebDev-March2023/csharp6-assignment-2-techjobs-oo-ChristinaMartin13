@@ -1,9 +1,14 @@
 ﻿using System;
+using System.ComponentModel.Design;
+using System.Data;
+using System.Xml.Linq;
+using TechJobsOOAutoGraded6;
+
 namespace TechJobsOOAutoGraded6
 {
 	public class Job
 	{
-        /*
+        
 
             public int Id { get; }
             private static int nextId = 1;
@@ -15,13 +20,50 @@ namespace TechJobsOOAutoGraded6
 
             // TODO: Task 3: Add the two necessary constructors.
 
-            // TODO: Task 3: Generate Equals() and GetHashCode() methods.  
+        public Job()
+        {
+            Id = nextId;
+            nextId++;
+        }
 
-            // TODO: Task 5: Generate custom ToString() method.
-                //Until you create this method, you will not be able to print a job to the console.
+        public Job(string name, Employer employerName, Location employerLocation, PositionType jobType, CoreCompetency jobCoreCompetency) : this()
+        {
+            Name = name;
+            EmployerName = employerName;
+            EmployerLocation = employerLocation;
+            JobType = jobType;
+            JobCoreCompetency = jobCoreCompetency;
+        }
+
+        // TODO: Task 3: Generate Equals() and GetHashCode() methods.  
+
+        public override bool Equals(object obj)
+        {
+            return obj is Job job &&
+                   Id == job.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
 
 
-        */
+        // TODO: Task 5: Generate custom ToString() method.
+        //Until you create this method, you will not be able to print a job to the console.
+
+        public override string ToString()
+        {
+            string nameValue = String.IsNullOrEmpty(Name) ? "Data not available" : Name;
+            string employerValue = String.IsNullOrEmpty(EmployerName.Value) ? "Data not available" : EmployerName.Value;
+            string locationValue = String.IsNullOrEmpty(EmployerLocation.Value) ? "Data not available" : EmployerLocation.Value;
+            string jobTypeValue = String.IsNullOrEmpty(JobType.Value) ? "Data not available" : JobType.Value;
+            string coreCompetencyValue = String.IsNullOrEmpty(JobCoreCompetency.Value) ? "Data not available" : JobCoreCompetency.Value;
+
+            return $"\nID: {Id}\nName: {nameValue}\nEmployer: {employerValue}\nLocation: {locationValue}\nPosition Type: {jobTypeValue}\nCore Competency: {coreCompetencyValue}\n";
+        }
+
+
     }
 }
 
