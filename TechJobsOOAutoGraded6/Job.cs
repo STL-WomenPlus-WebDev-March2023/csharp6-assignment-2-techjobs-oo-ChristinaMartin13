@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Design;
+using System.Data;
+using System.Xml.Linq;
 using TechJobsOOAutoGraded6;
 
 namespace TechJobsOOAutoGraded6
@@ -52,12 +54,13 @@ namespace TechJobsOOAutoGraded6
 
         public override string ToString()
         {
+            string nameValue = String.IsNullOrEmpty(Name) ? "Data not available" : Name;
             string employerValue = String.IsNullOrEmpty(EmployerName.Value) ? "Data not available" : EmployerName.Value;
             string locationValue = String.IsNullOrEmpty(EmployerLocation.Value) ? "Data not available" : EmployerLocation.Value;
             string jobTypeValue = String.IsNullOrEmpty(JobType.Value) ? "Data not available" : JobType.Value;
             string coreCompetencyValue = String.IsNullOrEmpty(JobCoreCompetency.Value) ? "Data not available" : JobCoreCompetency.Value;
 
-            return $"\nID: {Id}\nName: {Name}\nEmployer: {EmployerName.Value}\nLocation: {EmployerLocation.Value}\nPosition Type: {JobType.Value}\nCore Competency: {JobCoreCompetency.Value}\n";
+            return $"\nID: {Id}\nName: {nameValue}\nEmployer: {employerValue}\nLocation: {locationValue}\nPosition Type: {jobTypeValue}\nCore Competency: {coreCompetencyValue}\n";
         }
 
 

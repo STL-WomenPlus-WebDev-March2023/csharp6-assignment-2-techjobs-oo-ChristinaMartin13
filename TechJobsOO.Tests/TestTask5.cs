@@ -1,4 +1,5 @@
-﻿using TechJobs.Tests;
+﻿using System.Text.RegularExpressions;
+using TechJobs.Tests;
 
 namespace TechJobsOO.Tests
 {

@@ -62,7 +62,7 @@ namespace TechJobs.Tests
 
         public void TestToStringHandlesEmptyField()
         {
-            string expectedString = $"\nID: {job5.Id}\nName: {job5.Name}\nEmployer: {job5.EmployerName.Value}\nLocation: {job5.EmployerLocation.Value}\nPosition Type: {job5.JobType.Value}\nCore Competency: {job5.JobCoreCompetency.Value}\n";
+            string expectedString = $"\nID: {job5.Id}\nName: {job5.Name}\nEmployer: Data not available\nLocation: {job5.EmployerLocation.Value}\nPosition Type: Data not available\nCore Competency: {job5.JobCoreCompetency.Value}\n";
             string actualString = job5.ToString();
             Assert.AreEqual(expectedString, actualString);
         }
