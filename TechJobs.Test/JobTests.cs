@@ -15,6 +15,8 @@ namespace TechJobs.Tests
 
         Job job4 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
 
+        Job job5 = new Job("Product tester", new Employer(""), new Location("Desert"), new PositionType(""), new CoreCompetency("Persistence"));
+
         //initalize your testing objects here
         [TestMethod]
         public void TestSettingJobId()
@@ -38,6 +40,31 @@ namespace TechJobs.Tests
         public void TestJobsForEquality()
         {
             Assert.IsFalse(job2.Equals(job4));
+        }
+
+        [TestMethod]
+
+        public void TestToStringStartsAndEndsWithNewLine()
+        {
+            Assert.IsTrue(job3.ToString().StartsWith("\n"));
+            Assert.IsTrue(job3.ToString().EndsWith("\n"));
+        }
+
+        [TestMethod]
+        public void TestToStringContainsCorrectLabelsAndData()
+        {
+            string expectedString = $"\nID: {job3.Id}\nName: {job3.Name}\nEmployer: {job3.EmployerName.Value}\nLocation: {job3.EmployerLocation.Value}\nPosition Type: {job3.JobType.Value}\nCore Competency: {job3.JobCoreCompetency.Value}\n";
+            string actualString = job3.ToString();
+            Assert.AreEqual(expectedString, actualString);
+        }
+
+        [TestMethod]
+
+        public void TestToStringHandlesEmptyField()
+        {
+            string expectedString = $"\nID: {job5.Id}\nName: {job5.Name}\nEmployer: {job5.EmployerName.Value}\nLocation: {job5.EmployerLocation.Value}\nPosition Type: {job5.JobType.Value}\nCore Competency: {job5.JobCoreCompetency.Value}\n";
+            string actualString = job5.ToString();
+            Assert.AreEqual(expectedString, actualString);
         }
 
 

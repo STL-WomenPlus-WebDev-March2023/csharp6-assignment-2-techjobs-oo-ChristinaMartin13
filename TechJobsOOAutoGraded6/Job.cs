@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Design;
 using TechJobsOOAutoGraded6;
 
 namespace TechJobsOOAutoGraded6
@@ -49,6 +50,15 @@ namespace TechJobsOOAutoGraded6
         // TODO: Task 5: Generate custom ToString() method.
         //Until you create this method, you will not be able to print a job to the console.
 
+        public override string ToString()
+        {
+            string employerValue = String.IsNullOrEmpty(EmployerName.Value) ? "Data not available" : EmployerName.Value;
+            string locationValue = String.IsNullOrEmpty(EmployerLocation.Value) ? "Data not available" : EmployerLocation.Value;
+            string jobTypeValue = String.IsNullOrEmpty(JobType.Value) ? "Data not available" : JobType.Value;
+            string coreCompetencyValue = String.IsNullOrEmpty(JobCoreCompetency.Value) ? "Data not available" : JobCoreCompetency.Value;
+
+            return $"\nID: {Id}\nName: {Name}\nEmployer: {EmployerName.Value}\nLocation: {EmployerLocation.Value}\nPosition Type: {JobType.Value}\nCore Competency: {JobCoreCompetency.Value}\n";
+        }
 
 
     }
